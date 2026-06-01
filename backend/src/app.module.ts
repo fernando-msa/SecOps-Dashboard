@@ -16,6 +16,9 @@ import { IncidentsModule } from "./incidents/incidents.module";
 import { SoarModule } from "./soar/soar.module";
 import { ExportModule } from "./export/export.module";
 import { NotificationsModule } from "./notifications/notifications.module";
+import { TwoFAModule } from "./twofa/twofa.module";
+import { AuditModule } from "./audit/audit.module";
+import { ApiKeysModule } from "./apikeys/apikeys.module";
 
 @Module({
   imports: [
@@ -49,6 +52,9 @@ import { NotificationsModule } from "./notifications/notifications.module";
     SoarModule,
     ExportModule,
     NotificationsModule,
+    TwoFAModule,
+    AuditModule,
+    ApiKeysModule,
   ],
 })
 export class AppModule {}

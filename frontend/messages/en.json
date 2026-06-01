@@ -10,7 +10,8 @@
     "threatIntel": "Threat Intel",
     "assets": "Assets",
     "incidents": "Incidents",
-    "soar": "SOAR"
+    "soar": "SOAR",
+    "settings": "Settings"
   },
   "common": {
     "logout": "Logout",
@@ -150,6 +151,36 @@
     "timeline": "Timeline",
     "close": "Close",
     "create": "Create"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Security, API keys, and audit configuration",
+    "auditLog": "Audit Log",
+    "twoFactorAuth": "Two-Factor Authentication",
+    "status": "Status",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "twoFADesc": "Add an extra layer of security to your account with TOTP-based 2FA",
+    "enable2FA": "Enable 2FA",
+    "secretKey": "Secret Key",
+    "enterCode": "Enter the code from your authenticator app to verify",
+    "createAPIKey": "Create API Key",
+    "keyName": "Key name",
+    "create": "Create",
+    "keyCreated": "API Key created! Copy it now — it won't be shown again.",
+    "saveKeyWarning": "Save this key securely. You won't be able to see it again.",
+    "yourKeys": "Your API Keys",
+    "noKeys": "No API keys created",
+    "active": "Active",
+    "revoked": "Revoked",
+    "revoke": "Revoke",
+    "recentActivity": "Recent Activity",
+    "noLogs": "No audit logs",
+    "timestamp": "Timestamp",
+    "user": "User",
+    "action": "Action",
+    "resource": "Resource",
+    "details": "Details"
   },
   "soar": {
     "title": "SOAR — Automated Response",

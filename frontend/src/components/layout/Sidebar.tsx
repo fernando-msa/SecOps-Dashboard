@@ -16,6 +16,7 @@ import {
   Server,
   AlertOctagon,
   Zap,
+  Settings,
   LogOut,
 } from "lucide-react";
 
@@ -40,6 +41,7 @@ export function Sidebar({ onLogout }: SidebarProps) {
     { name: t("assets"), href: `/${locale}/assets`, icon: Server },
     { name: t("incidents"), href: `/${locale}/incidents`, icon: AlertOctagon },
     { name: t("soar"), href: `/${locale}/soar`, icon: Zap },
+    { name: t("settings"), href: `/${locale}/settings`, icon: Settings },
   ];
 
   return (

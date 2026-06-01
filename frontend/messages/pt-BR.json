@@ -10,7 +10,8 @@
     "threatIntel": "Threat Intel",
     "assets": "Ativos",
     "incidents": "Incidentes",
-    "soar": "SOAR"
+    "soar": "SOAR",
+    "settings": "Configuracoes"
   },
   "common": {
     "logout": "Sair",
@@ -150,6 +151,36 @@
     "timeline": "Linha do tempo",
     "close": "Fechar",
     "create": "Criar"
+  },
+  "settings": {
+    "title": "Configuracoes",
+    "subtitle": "Seguranca, chaves de API e configuracao de auditoria",
+    "auditLog": "Log de Auditoria",
+    "twoFactorAuth": "Autenticacao de Dois Fatores",
+    "status": "Status",
+    "enabled": "Habilitado",
+    "disabled": "Desabilitado",
+    "twoFADesc": "Adicione uma camada extra de seguranca com 2FA baseado em TOTP",
+    "enable2FA": "Habilitar 2FA",
+    "secretKey": "Chave Secreta",
+    "enterCode": "Digite o codigo do seu app autenticador",
+    "createAPIKey": "Criar Chave API",
+    "keyName": "Nome da chave",
+    "create": "Criar",
+    "keyCreated": "Chave API criada! Copie agora — nao sera exibida novamente.",
+    "saveKeyWarning": "Salve esta chave com seguranca. Voce nao podera ve-la novamente.",
+    "yourKeys": "Suas Chaves API",
+    "noKeys": "Nenhuma chave API criada",
+    "active": "Ativa",
+    "revoked": "Revogada",
+    "revoke": "Revogar",
+    "recentActivity": "Atividade Recente",
+    "noLogs": "Nenhum log de auditoria",
+    "timestamp": "Data",
+    "user": "Usuario",
+    "action": "Acao",
+    "resource": "Recurso",
+    "details": "Detalhes"
   },
   "soar": {
     "title": "SOAR — Resposta Automatizada",
