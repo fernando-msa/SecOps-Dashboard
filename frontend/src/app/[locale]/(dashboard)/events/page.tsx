@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import api from "@/lib/api";
 import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { Plus, Filter } from "lucide-react";
+import { Filter } from "lucide-react";
 
 interface SecurityEvent {
   id: string;
@@ -18,6 +18,7 @@ interface SecurityEvent {
 }
 
 export default function EventsPage() {
+  const t = useTranslations("events");
   const [events, setEvents] = useState<SecurityEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [severityFilter, setSeverityFilter] = useState("");
@@ -44,11 +45,9 @@ export default function EventsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Security Events</h1>
-          <p className="text-sm text-gray-500">Monitor and manage security alerts</p>
-        </div>
+      <div>
+        <h1 className="text-2xl font-bold text-gray-900">{t("title")}</h1>
+        <p className="text-sm text-gray-500">{t("subtitle")}</p>
       </div>
 
       <div className="flex items-center gap-3">
@@ -59,22 +58,22 @@ export default function EventsPage() {
             onChange={(e) => setSeverityFilter(e.target.value)}
             className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none"
           >
-            <option value="">All Severities</option>
-            <option value="critical">Critical</option>
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
+            <option value="">{t("allSeverities")}</option>
+            <option value="critical">{t("critical")}</option>
+            <option value="high">{t("high")}</option>
+            <option value="medium">{t("medium")}</option>
+            <option value="low">{t("low")}</option>
           </select>
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
             className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none"
           >
-            <option value="">All Statuses</option>
-            <option value="open">Open</option>
-            <option value="investigating">Investigating</option>
-            <option value="resolved">Resolved</option>
-            <option value="closed">Closed</option>
+            <option value="">{t("allStatuses")}</option>
+            <option value="open">{t("open")}</option>
+            <option value="investigating">{t("investigating")}</option>
+            <option value="resolved">{t("resolved")}</option>
+            <option value="closed">{t("closed")}</option>
           </select>
         </div>
       </div>
@@ -85,18 +84,18 @@ export default function EventsPage() {
             <div className="h-6 w-6 animate-spin rounded-full border-4 border-primary-600 border-t-transparent" />
           </div>
         ) : events.length === 0 ? (
-          <p className="py-8 text-center text-gray-500">No events found</p>
+          <p className="py-8 text-center text-gray-500">{t("noEvents")}</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
                 <tr className="border-b border-gray-200">
-                  <th className="pb-3 font-medium text-gray-500">Title</th>
-                  <th className="pb-3 font-medium text-gray-500">Severity</th>
-                  <th className="pb-3 font-medium text-gray-500">Status</th>
-                  <th className="pb-3 font-medium text-gray-500">Source</th>
-                  <th className="pb-3 font-medium text-gray-500">Category</th>
-                  <th className="pb-3 font-medium text-gray-500">Created</th>
+                  <th className="pb-3 font-medium text-gray-500">{t("tableTitle")}</th>
+                  <th className="pb-3 font-medium text-gray-500">{t("tableSeverity")}</th>
+                  <th className="pb-3 font-medium text-gray-500">{t("tableStatus")}</th>
+                  <th className="pb-3 font-medium text-gray-500">{t("tableSource")}</th>
+                  <th className="pb-3 font-medium text-gray-500">{t("tableCategory")}</th>
+                  <th className="pb-3 font-medium text-gray-500">{t("tableCreated")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">

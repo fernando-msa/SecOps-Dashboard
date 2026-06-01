@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import api from "@/lib/api";
 import { StatsCards } from "@/components/dashboard/StatsCards";
 import { AlertsTimeline } from "@/components/dashboard/AlertsTimeline";
@@ -8,6 +9,7 @@ import { ThreatChart } from "@/components/dashboard/ThreatChart";
 import { SeverityDistribution } from "@/components/dashboard/SeverityDistribution";
 
 export default function DashboardPage() {
+  const t = useTranslations("dashboard");
   const [overview, setOverview] = useState<any>(null);
   const [mttr, setMttr] = useState(0);
   const [timeline, setTimeline] = useState([]);
@@ -42,8 +44,8 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-sm text-gray-500">Security Operations Overview</p>
+        <h1 className="text-2xl font-bold text-gray-900">{t("title")}</h1>
+        <p className="text-sm text-gray-500">{t("subtitle")}</p>
       </div>
 
       {overview && <StatsCards stats={overview} mttr={mttr} />}

@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardHeader, CardTitle } from "@/components/ui/Card";
 
@@ -14,14 +17,16 @@ interface AlertsTimelineProps {
 }
 
 export function AlertsTimeline({ alerts }: AlertsTimelineProps) {
+  const t = useTranslations("dashboard");
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Recent Alerts</CardTitle>
+        <CardTitle>{t("recentAlerts")}</CardTitle>
       </CardHeader>
       <div className="space-y-3">
         {alerts.length === 0 ? (
-          <p className="text-sm text-gray-500">No recent alerts</p>
+          <p className="text-sm text-gray-500">{t("noAlerts")}</p>
         ) : (
           alerts.map((alert) => (
             <div

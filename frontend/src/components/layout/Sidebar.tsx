@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { clsx } from "clsx";
 import {
   LayoutDashboard,
@@ -10,25 +11,26 @@ import {
   BookOpen,
   BarChart3,
   ClipboardCheck,
-  Settings,
   LogOut,
 } from "lucide-react";
-
-const navigation = [
-  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Events", href: "/events", icon: Shield },
-  { name: "Vulnerabilities", href: "/vulnerabilities", icon: Bug },
-  { name: "Playbooks", href: "/playbooks", icon: BookOpen },
-  { name: "Metrics", href: "/metrics", icon: BarChart3 },
-  { name: "Compliance", href: "/compliance", icon: ClipboardCheck },
-];
 
 interface SidebarProps {
   onLogout: () => void;
 }
 
 export function Sidebar({ onLogout }: SidebarProps) {
+  const t = useTranslations("nav");
   const pathname = usePathname();
+  const { locale } = useParams();
+
+  const navigation = [
+    { name: t("dashboard"), href: `/${locale}/dashboard`, icon: LayoutDashboard },
+    { name: t("events"), href: `/${locale}/events`, icon: Shield },
+    { name: t("vulnerabilities"), href: `/${locale}/vulnerabilities`, icon: Bug },
+    { name: t("playbooks"), href: `/${locale}/playbooks`, icon: BookOpen },
+    { name: t("metrics"), href: `/${locale}/metrics`, icon: BarChart3 },
+    { name: t("compliance"), href: `/${locale}/compliance`, icon: ClipboardCheck },
+  ];
 
   return (
     <div className="flex h-screen w-64 flex-col border-r border-gray-200 bg-white">
@@ -64,7 +66,7 @@ export function Sidebar({ onLogout }: SidebarProps) {
           className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
         >
           <LogOut className="h-5 w-5" />
-          Logout
+          {t("logout")}
         </button>
       </div>
     </div>

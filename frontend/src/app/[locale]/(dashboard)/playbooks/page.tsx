@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import api from "@/lib/api";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
@@ -26,6 +27,8 @@ interface Playbook {
 }
 
 export default function PlaybooksPage() {
+  const t = useTranslations("playbooks");
+  const tc = useTranslations("common");
   const [playbooks, setPlaybooks] = useState<Playbook[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -63,8 +66,8 @@ export default function PlaybooksPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Playbooks</h1>
-        <p className="text-sm text-gray-500">Incident response runbooks</p>
+        <h1 className="text-2xl font-bold text-gray-900">{t("title")}</h1>
+        <p className="text-sm text-gray-500">{t("subtitle")}</p>
       </div>
 
       {loading ? (
@@ -73,14 +76,14 @@ export default function PlaybooksPage() {
         </div>
       ) : playbooks.length === 0 ? (
         <Card>
-          <p className="py-8 text-center text-gray-500">No playbooks configured</p>
+          <p className="py-8 text-center text-gray-500">{t("noPlaybooks")}</p>
         </Card>
       ) : (
         <div className="space-y-3">
           {playbooks.map((playbook) => (
-            <Card key={playbook.id} className="cursor-pointer">
+            <Card key={playbook.id}>
               <div
-                className="flex items-center justify-between"
+                className="flex items-center justify-between cursor-pointer"
                 onClick={() =>
                   setExpandedId(expandedId === playbook.id ? null : playbook.id)
                 }
@@ -95,7 +98,7 @@ export default function PlaybooksPage() {
                 <div className="flex items-center gap-3">
                   {playbook.category && <Badge>{playbook.category}</Badge>}
                   <Badge variant={playbook.isActive ? "success" : "default"}>
-                    {playbook.isActive ? "Active" : "Inactive"}
+                    {playbook.isActive ? tc("active") : tc("inactive")}
                   </Badge>
                   {expandedId === playbook.id ? (
                     <ChevronUp className="h-4 w-4 text-gray-400" />
@@ -109,7 +112,7 @@ export default function PlaybooksPage() {
                 <div className="mt-4 border-t border-gray-100 pt-4">
                   {playbook.triggerCondition && (
                     <p className="mb-3 text-sm text-gray-600">
-                      <span className="font-medium">Trigger:</span>{" "}
+                      <span className="font-medium">{t("trigger")}:</span>{" "}
                       {playbook.triggerCondition}
                     </p>
                   )}
@@ -143,7 +146,7 @@ export default function PlaybooksPage() {
                         toggleActive(playbook.id);
                       }}
                     >
-                      {playbook.isActive ? "Deactivate" : "Activate"}
+                      {playbook.isActive ? tc("deactivate") : tc("activate")}
                     </Button>
                   </div>
                 </div>

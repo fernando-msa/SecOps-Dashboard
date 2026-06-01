@@ -1,13 +1,17 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Bell, Search } from "lucide-react";
 import { User } from "@/lib/auth";
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
 
 interface TopbarProps {
   user: User | null;
 }
 
 export function Topbar({ user }: TopbarProps) {
+  const t = useTranslations("common");
+
   return (
     <div className="flex h-16 items-center justify-between border-b border-gray-200 bg-white px-6">
       <div className="flex items-center gap-4">
@@ -15,13 +19,15 @@ export function Topbar({ user }: TopbarProps) {
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
           <input
             type="text"
-            placeholder="Search events, vulnerabilities..."
+            placeholder={t("search")}
             className="w-80 rounded-lg border border-gray-300 py-2 pl-10 pr-4 text-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
           />
         </div>
       </div>
 
       <div className="flex items-center gap-4">
+        <LanguageSwitcher />
+
         <button className="relative rounded-lg p-2 text-gray-500 hover:bg-gray-100">
           <Bell className="h-5 w-5" />
           <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-red-500" />

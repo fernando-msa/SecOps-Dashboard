@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Card, CardHeader, CardTitle } from "@/components/ui/Card";
 import {
   BarChart,
@@ -16,10 +17,12 @@ interface ThreatChartProps {
 }
 
 export function ThreatChart({ data }: ThreatChartProps) {
+  const t = useTranslations("dashboard");
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Alerts — Last 30 Days</CardTitle>
+        <CardTitle>{t("alertsChart")}</CardTitle>
       </CardHeader>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
@@ -32,8 +35,8 @@ export function ThreatChart({ data }: ThreatChartProps) {
             />
             <YAxis tick={{ fontSize: 11 }} />
             <Tooltip
-              labelFormatter={(label) => `Date: ${label}`}
-              formatter={(value: number) => [value, "Alerts"]}
+              labelFormatter={(label) => `${t("date")}: ${label}`}
+              formatter={(value: number) => [value, t("alerts")]}
             />
             <Bar dataKey="count" fill="#3b82f6" radius={[4, 4, 0, 0]} />
           </BarChart>

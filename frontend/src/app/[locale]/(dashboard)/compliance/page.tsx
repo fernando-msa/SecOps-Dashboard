@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import api from "@/lib/api";
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardHeader, CardTitle } from "@/components/ui/Card";
@@ -29,6 +30,7 @@ const frameworkColors: Record<string, string> = {
 };
 
 export default function CompliancePage() {
+  const t = useTranslations("compliance");
   const [summary, setSummary] = useState<FrameworkSummary[]>([]);
   const [checks, setChecks] = useState<any[]>([]);
   const [selectedFramework, setSelectedFramework] = useState<string | null>(null);
@@ -49,13 +51,19 @@ export default function CompliancePage() {
     : checks;
 
   const statusBadge = (status: string) => {
+    const labels: Record<string, string> = {
+      compliant: t("compliant"),
+      non_compliant: t("nonCompliant"),
+      partial: t("partial"),
+      not_applicable: t("notApplicable"),
+    };
     const variants: Record<string, any> = {
       compliant: "success",
       non_compliant: "critical",
       partial: "warning",
       not_applicable: "default",
     };
-    return <Badge variant={variants[status] || "default"}>{status.replace("_", " ")}</Badge>;
+    return <Badge variant={variants[status] || "default"}>{labels[status] || status}</Badge>;
   };
 
   if (loading) {
@@ -69,10 +77,8 @@ export default function CompliancePage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Compliance</h1>
-        <p className="text-sm text-gray-500">
-          Regulatory framework compliance tracking
-        </p>
+        <h1 className="text-2xl font-bold text-gray-900">{t("title")}</h1>
+        <p className="text-sm text-gray-500">{t("subtitle")}</p>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -82,16 +88,14 @@ export default function CompliancePage() {
           return (
             <Card
               key={fw.framework}
-              className={`cursor-pointer transition-all ${
-                selectedFramework === fw.framework
-                  ? "ring-2 ring-primary-500"
-                  : ""
-              }`}
               onClick={() =>
                 setSelectedFramework(
                   selectedFramework === fw.framework ? null : fw.framework
                 )
               }
+              className={`transition-all ${
+                selectedFramework === fw.framework ? "ring-2 ring-primary-500" : ""
+              }`}
             >
               <div className="flex items-center gap-4">
                 <div className={`rounded-lg p-3 ${color}`}>
@@ -100,7 +104,7 @@ export default function CompliancePage() {
                 <div className="flex-1">
                   <h3 className="font-semibold text-gray-900">{fw.framework}</h3>
                   <p className="text-sm text-gray-500">
-                    {fw.compliant}/{fw.total} controls
+                    {fw.compliant}/{fw.total} {t("controls")}
                   </p>
                 </div>
                 <div className="text-right">
@@ -122,22 +126,22 @@ export default function CompliancePage() {
         <CardHeader>
           <CardTitle>
             {selectedFramework
-              ? `${selectedFramework} Controls`
-              : "All Compliance Checks"}
+              ? `${selectedFramework} ${t("controls")}`
+              : t("allChecks")}
           </CardTitle>
         </CardHeader>
         {filteredChecks.length === 0 ? (
-          <p className="py-8 text-center text-gray-500">No compliance checks configured</p>
+          <p className="py-8 text-center text-gray-500">{t("noChecks")}</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
                 <tr className="border-b border-gray-200">
-                  <th className="pb-3 font-medium text-gray-500">Control ID</th>
-                  <th className="pb-3 font-medium text-gray-500">Framework</th>
-                  <th className="pb-3 font-medium text-gray-500">Title</th>
-                  <th className="pb-3 font-medium text-gray-500">Status</th>
-                  <th className="pb-3 font-medium text-gray-500">Last Reviewed</th>
+                  <th className="pb-3 font-medium text-gray-500">{t("controlId")}</th>
+                  <th className="pb-3 font-medium text-gray-500">{t("framework")}</th>
+                  <th className="pb-3 font-medium text-gray-500">{t("tableTitle")}</th>
+                  <th className="pb-3 font-medium text-gray-500">{t("tableStatus")}</th>
+                  <th className="pb-3 font-medium text-gray-500">{t("lastReviewed")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">

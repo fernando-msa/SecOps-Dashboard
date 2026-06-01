@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Card } from "@/components/ui/Card";
 import { Shield, Bug, Clock, ClipboardCheck } from "lucide-react";
 
@@ -13,35 +16,37 @@ interface StatsCardsProps {
 }
 
 export function StatsCards({ stats, mttr }: StatsCardsProps) {
+  const t = useTranslations("dashboard");
+
   const cards = [
     {
-      title: "Open Events",
+      title: t("openEvents"),
       value: stats.openEvents,
-      subtitle: `${stats.totalEvents} total`,
+      subtitle: `${stats.totalEvents} ${t("total")}`,
       icon: Shield,
       color: "text-red-600",
       bg: "bg-red-50",
     },
     {
-      title: "Open Vulnerabilities",
+      title: t("openVulns"),
       value: stats.openVulnerabilities,
-      subtitle: `${stats.totalVulnerabilities} total`,
+      subtitle: `${stats.totalVulnerabilities} ${t("total")}`,
       icon: Bug,
       color: "text-orange-600",
       bg: "bg-orange-50",
     },
     {
-      title: "MTTR",
+      title: t("mttr"),
       value: `${mttr}h`,
-      subtitle: "Mean Time to Resolve",
+      subtitle: t("mttrSubtitle"),
       icon: Clock,
       color: "text-blue-600",
       bg: "bg-blue-50",
     },
     {
-      title: "Compliance",
+      title: t("compliance"),
       value: `${stats.complianceScore}%`,
-      subtitle: "Overall score",
+      subtitle: t("overallScore"),
       icon: ClipboardCheck,
       color: "text-emerald-600",
       bg: "bg-emerald-50",

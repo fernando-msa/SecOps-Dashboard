@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import api from "@/lib/api";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
@@ -18,6 +19,7 @@ interface Vulnerability {
 }
 
 export default function VulnerabilitiesPage() {
+  const t = useTranslations("vulnerabilities");
   const [vulns, setVulns] = useState<Vulnerability[]>([]);
   const [loading, setLoading] = useState(true);
   const [severityFilter, setSeverityFilter] = useState("");
@@ -35,8 +37,8 @@ export default function VulnerabilitiesPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Vulnerabilities</h1>
-        <p className="text-sm text-gray-500">Track and manage security vulnerabilities</p>
+        <h1 className="text-2xl font-bold text-gray-900">{t("title")}</h1>
+        <p className="text-sm text-gray-500">{t("subtitle")}</p>
       </div>
 
       <div className="flex items-center gap-2">
@@ -49,11 +51,11 @@ export default function VulnerabilitiesPage() {
           }}
           className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none"
         >
-          <option value="">All Severities</option>
-          <option value="critical">Critical</option>
-          <option value="high">High</option>
-          <option value="medium">Medium</option>
-          <option value="low">Low</option>
+          <option value="">{t("allSeverities")}</option>
+          <option value="critical">{t("critical")}</option>
+          <option value="high">{t("high")}</option>
+          <option value="medium">{t("medium")}</option>
+          <option value="low">{t("low")}</option>
         </select>
       </div>
 
@@ -63,19 +65,19 @@ export default function VulnerabilitiesPage() {
             <div className="h-6 w-6 animate-spin rounded-full border-4 border-primary-600 border-t-transparent" />
           </div>
         ) : vulns.length === 0 ? (
-          <p className="py-8 text-center text-gray-500">No vulnerabilities found</p>
+          <p className="py-8 text-center text-gray-500">{t("noVulns")}</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
                 <tr className="border-b border-gray-200">
-                  <th className="pb-3 font-medium text-gray-500">Title</th>
-                  <th className="pb-3 font-medium text-gray-500">CVE</th>
-                  <th className="pb-3 font-medium text-gray-500">Severity</th>
-                  <th className="pb-3 font-medium text-gray-500">CVSS</th>
-                  <th className="pb-3 font-medium text-gray-500">Status</th>
-                  <th className="pb-3 font-medium text-gray-500">Asset</th>
-                  <th className="pb-3 font-medium text-gray-500">Discovered</th>
+                  <th className="pb-3 font-medium text-gray-500">{t("tableTitle")}</th>
+                  <th className="pb-3 font-medium text-gray-500">{t("tableCve")}</th>
+                  <th className="pb-3 font-medium text-gray-500">{t("tableSeverity")}</th>
+                  <th className="pb-3 font-medium text-gray-500">{t("tableCvss")}</th>
+                  <th className="pb-3 font-medium text-gray-500">{t("tableStatus")}</th>
+                  <th className="pb-3 font-medium text-gray-500">{t("tableAsset")}</th>
+                  <th className="pb-3 font-medium text-gray-500">{t("tableDiscovered")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">

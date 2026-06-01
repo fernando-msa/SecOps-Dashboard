@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Card, CardHeader, CardTitle } from "@/components/ui/Card";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts";
 
@@ -15,15 +16,20 @@ const COLORS = {
 };
 
 export function SeverityDistribution({ data }: SeverityDistributionProps) {
-  const chartData = Object.entries(data).map(([name, value]) => ({
-    name: name.charAt(0).toUpperCase() + name.slice(1),
-    value,
-  }));
+  const t = useTranslations("events");
+  const td = useTranslations("dashboard");
+
+  const chartData = [
+    { name: t("critical"), value: data.critical },
+    { name: t("high"), value: data.high },
+    { name: t("medium"), value: data.medium },
+    { name: t("low"), value: data.low },
+  ];
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Events by Severity</CardTitle>
+        <CardTitle>{td("severityDist")}</CardTitle>
       </CardHeader>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
@@ -37,10 +43,10 @@ export function SeverityDistribution({ data }: SeverityDistributionProps) {
               paddingAngle={4}
               dataKey="value"
             >
-              {chartData.map((entry) => (
+              {chartData.map((entry, index) => (
                 <Cell
                   key={entry.name}
-                  fill={COLORS[entry.name.toLowerCase() as keyof typeof COLORS]}
+                  fill={Object.values(COLORS)[index]}
                 />
               ))}
             </Pie>

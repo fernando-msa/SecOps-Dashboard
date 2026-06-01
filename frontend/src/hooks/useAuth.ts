@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import api from "@/lib/api";
 import { User, getStoredUser, storeAuth, clearAuth } from "@/lib/auth";
 
@@ -9,6 +9,7 @@ export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const { locale } = useParams();
 
   useEffect(() => {
     const stored = getStoredUser();
@@ -21,9 +22,9 @@ export function useAuth() {
       const res = await api.post("/auth/login", { email, password });
       storeAuth(res.data.access_token, res.data.user);
       setUser(res.data.user);
-      router.push("/dashboard");
+      router.push(`/${locale}/dashboard`);
     },
-    [router]
+    [router, locale]
   );
 
   const register = useCallback(
@@ -36,16 +37,16 @@ export function useAuth() {
       });
       storeAuth(res.data.access_token, res.data.user);
       setUser(res.data.user);
-      router.push("/dashboard");
+      router.push(`/${locale}/dashboard`);
     },
-    [router]
+    [router, locale]
   );
 
   const logout = useCallback(() => {
     clearAuth();
     setUser(null);
-    router.push("/login");
-  }, [router]);
+    router.push(`/${locale}/login`);
+  }, [router, locale]);
 
   return { user, loading, login, register, logout };
 }
