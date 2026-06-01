@@ -11,6 +11,11 @@ import {
   BookOpen,
   BarChart3,
   ClipboardCheck,
+  Radio,
+  Radar,
+  Server,
+  AlertOctagon,
+  Zap,
   LogOut,
 } from "lucide-react";
 
@@ -30,6 +35,11 @@ export function Sidebar({ onLogout }: SidebarProps) {
     { name: t("playbooks"), href: `/${locale}/playbooks`, icon: BookOpen },
     { name: t("metrics"), href: `/${locale}/metrics`, icon: BarChart3 },
     { name: t("compliance"), href: `/${locale}/compliance`, icon: ClipboardCheck },
+    { name: t("siem"), href: `/${locale}/siem`, icon: Radio },
+    { name: t("threatIntel"), href: `/${locale}/threat-intel`, icon: Radar },
+    { name: t("assets"), href: `/${locale}/assets`, icon: Server },
+    { name: t("incidents"), href: `/${locale}/incidents`, icon: AlertOctagon },
+    { name: t("soar"), href: `/${locale}/soar`, icon: Zap },
   ];
 
   return (

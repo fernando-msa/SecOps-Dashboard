@@ -9,6 +9,11 @@ import { VulnerabilitiesModule } from "./vulnerabilities/vulnerabilities.module"
 import { PlaybooksModule } from "./playbooks/playbooks.module";
 import { MetricsModule } from "./metrics/metrics.module";
 import { ComplianceModule } from "./compliance/compliance.module";
+import { SiemModule } from "./siem/siem.module";
+import { ThreatIntelModule } from "./threat-intel/threat-intel.module";
+import { AssetsModule } from "./assets/assets.module";
+import { IncidentsModule } from "./incidents/incidents.module";
+import { SoarModule } from "./soar/soar.module";
 
 @Module({
   imports: [
@@ -35,6 +40,11 @@ import { ComplianceModule } from "./compliance/compliance.module";
     PlaybooksModule,
     MetricsModule,
     ComplianceModule,
+    SiemModule,
+    ThreatIntelModule,
+    AssetsModule,
+    IncidentsModule,
+    SoarModule,
   ],
 })
 export class AppModule {}
