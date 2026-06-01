@@ -1,2 +1,172 @@
-# SecOps-Dashboard
-Teste
+# SecOps Dashboard
+
+Security Operations Center (SOC) — Centralized security event management, vulnerability tracking, incident response playbooks, and compliance monitoring.
+
+## Architecture
+
+```
+├── backend/          NestJS API (port 3001)
+├── frontend/         Next.js App Router (port 3000)
+└── docker-compose.yml  PostgreSQL
+```
+
+### Stack
+
+- **Backend**: NestJS + TypeORM + PostgreSQL + JWT + WebSocket
+- **Frontend**: Next.js 14 + Tailwind CSS + Recharts + Socket.IO
+- **Auth**: JWT with multi-tenant support
+- **Real-time**: WebSocket for live security alerts
+
+## Quick Start
+
+### 1. Start Database
+
+```bash
+docker-compose up -d
+```
+
+### 2. Backend
+
+```bash
+cd backend
+cp .env.example .env    # configure database credentials
+npm install
+npm run start:dev       # http://localhost:3001
+```
+
+### 3. Frontend
+
+```bash
+cd frontend
+cp .env.example .env.local
+npm install
+npm run dev             # http://localhost:3000
+```
+
+### 4. Create Account
+
+Open http://localhost:3000/login and register a new account.
+
+## Features
+
+### Dashboard
+- Real-time security event overview
+- Stats cards: Open Events, Vulnerabilities, MTTR, Compliance Score
+- 30-day alert trend chart
+- Severity distribution (critical/high/medium/low)
+- Recent alerts timeline
+
+### Security Events
+- CRUD with filters (severity, status)
+- WebSocket real-time push notifications
+- Event stats by severity and status
+
+### Vulnerabilities
+- Track CVEs with CVSS scores
+- Filter by severity and status
+- Affected asset tracking
+
+### Playbooks
+- Incident response runbooks
+- Steps: manual, automated, approval
+- Toggle active/inactive
+- Trigger condition configuration
+
+### Metrics
+- **MTTR** — Mean Time to Resolve
+- **MTTD** — Mean Time to Detect
+- Incidents by category breakdown
+- 30-day timeline
+
+### Compliance
+- Framework tracking: ISO 27001, LGPD, NIST
+- Per-framework compliance percentage
+- Control status: compliant, non-compliant, partial, N/A
+- Evidence and last reviewed date
+
+## API Endpoints
+
+### Auth
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/auth/register` | Create account + tenant |
+| POST | `/api/auth/login` | Login, returns JWT |
+
+### Security Events
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/events` | List events (filters: severity, status) |
+| POST | `/api/events` | Create event |
+| GET | `/api/events/stats` | Event statistics |
+| GET | `/api/events/recent` | Recent alerts |
+| PUT | `/api/events/:id` | Update event |
+| DELETE | `/api/events/:id` | Delete event |
+
+### Vulnerabilities
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/vulnerabilities` | List vulnerabilities |
+| POST | `/api/vulnerabilities` | Create vulnerability |
+| GET | `/api/vulnerabilities/stats` | Vulnerability stats |
+| PUT | `/api/vulnerabilities/:id` | Update vulnerability |
+| DELETE | `/api/vulnerabilities/:id` | Delete vulnerability |
+
+### Playbooks
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/playbooks` | List playbooks |
+| POST | `/api/playbooks` | Create playbook |
+| PATCH | `/api/playbooks/:id/toggle` | Toggle active/inactive |
+| PUT | `/api/playbooks/:id` | Update playbook |
+| DELETE | `/api/playbooks/:id` | Delete playbook |
+
+### Metrics
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/metrics/overview` | Dashboard overview |
+| GET | `/api/metrics/mttr` | Mean Time to Resolve |
+| GET | `/api/metrics/mttd` | Mean Time to Detect |
+| GET | `/api/metrics/incidents-by-category` | Category breakdown |
+| GET | `/api/metrics/timeline` | 30-day event timeline |
+
+### Compliance
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/compliance` | List compliance checks |
+| POST | `/api/compliance` | Create check |
+| GET | `/api/compliance/summary` | Per-framework summary |
+| GET | `/api/compliance/framework/:name` | Checks by framework |
+| PUT | `/api/compliance/:id` | Update check |
+| DELETE | `/api/compliance/:id` | Delete check |
+
+## Multi-Tenant
+
+Every entity is scoped to a tenant. The JWT token includes `tenantId`, and all queries are automatically filtered. New accounts create a new tenant automatically.
+
+## WebSocket
+
+Connect to `ws://localhost:3001/events` with `tenantId` query parameter:
+
+```javascript
+const socket = io("http://localhost:3001/events", {
+  query: { tenantId: "your-tenant-id" }
+});
+
+socket.on("newEvent", (event) => {
+  console.log("New security event:", event);
+});
+```
+
+## Ecosystem
+
+Part of a security and operations tooling ecosystem:
+
+- **SecOps Dashboard** — SOC centralizado (this project)
+- **FirewallWatch** — Firewall event monitoring
+- **SecPolicy-HAMA** — Security policy management
+- **InfraPulse** — Infrastructure monitoring
+- **OpsBoard** — Operations dashboard
+
+## License
+
+MIT
