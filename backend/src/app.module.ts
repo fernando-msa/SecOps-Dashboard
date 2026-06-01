@@ -14,6 +14,8 @@ import { ThreatIntelModule } from "./threat-intel/threat-intel.module";
 import { AssetsModule } from "./assets/assets.module";
 import { IncidentsModule } from "./incidents/incidents.module";
 import { SoarModule } from "./soar/soar.module";
+import { ExportModule } from "./export/export.module";
+import { NotificationsModule } from "./notifications/notifications.module";
 
 @Module({
   imports: [
@@ -45,6 +47,8 @@ import { SoarModule } from "./soar/soar.module";
     AssetsModule,
     IncidentsModule,
     SoarModule,
+    ExportModule,
+    NotificationsModule,
   ],
 })
 export class AppModule {}

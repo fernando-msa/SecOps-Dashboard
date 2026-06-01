@@ -12,7 +12,11 @@ export function Card({ children, className, onClick }: CardProps) {
     <div
       onClick={onClick}
       className={twMerge(
-        clsx("rounded-xl border border-gray-200 bg-white p-6 shadow-sm", onClick && "cursor-pointer", className)
+        clsx(
+          "rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800",
+          onClick && "cursor-pointer",
+          className
+        )
       )}
     >
       {children}
@@ -26,7 +30,7 @@ export function CardHeader({ children, className }: CardProps) {
 
 export function CardTitle({ children, className }: CardProps) {
   return (
-    <h3 className={twMerge(clsx("text-lg font-semibold text-gray-900", className))}>
+    <h3 className={twMerge(clsx("text-lg font-semibold text-gray-900 dark:text-gray-100", className))}>
       {children}
     </h3>
   );
