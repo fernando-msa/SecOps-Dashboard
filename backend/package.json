@@ -14,7 +14,9 @@
     "start:prod": "node dist/main",
     "test": "npm run build && node --test test/*.test.js",
     "test:ci": "npm test",
-    "typecheck": "tsc --noEmit --incremental false"
+    "typecheck": "tsc --noEmit --incremental false",
+    "migration:run": "npm run build && typeorm migration:run -d dist/data-source.js",
+    "migration:rollback": "npm run build && typeorm migration:revert -d dist/data-source.js"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.0",

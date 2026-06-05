@@ -1,0 +1,12 @@
+### Liveness
+GET http://localhost:3001/health
+
+### Readiness (checks PostgreSQL and Redis)
+GET http://localhost:3001/ready
+
+### Prometheus scrape endpoint
+GET http://localhost:3001/metrics
+
+### Authenticated SOC overview metrics
+GET http://localhost:3001/api/metrics/overview
+Authorization: Bearer {{token}}
