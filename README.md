@@ -1,7 +1,10 @@
 # SecOps Dashboard
 
-![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF?logo=githubactions&logoColor=white)
+![CI](https://img.shields.io/badge/CI-workflow%20configured-2088FF?logo=githubactions&logoColor=white)
+![CI/CD](https://img.shields.io/badge/CI%2FCD-pipeline%20configured-2088FF?logo=githubactions&logoColor=white)
+![Coverage](https://img.shields.io/badge/coverage-node%3Atest%20service%20rules-brightgreen?logo=codecov&logoColor=white)
 ![Tests](https://img.shields.io/badge/tests-node%3Atest-brightgreen?logo=node.js&logoColor=white)
+![Type Check](https://img.shields.io/badge/typecheck-tsc%20--noEmit-3178C6?logo=typescript&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)
 ![NestJS](https://img.shields.io/badge/backend-NestJS-E0234E?logo=nestjs&logoColor=white)
 ![Next.js](https://img.shields.io/badge/frontend-Next.js-000000?logo=nextdotjs&logoColor=white)
@@ -15,12 +18,13 @@ Security Operations Center (SOC) — Centralized security event management, vuln
 ```
 ├── backend/          NestJS API (port 3001)
 ├── frontend/         Next.js App Router (port 3000)
-└── docker-compose.yml  PostgreSQL
+├── docs/grafana/     Example Grafana dashboard for Prometheus metrics
+└── docker-compose.yml  PostgreSQL + Redis
 ```
 
 ### Stack
 
-- **Backend**: NestJS + TypeORM + PostgreSQL + JWT + WebSocket
+- **Backend**: NestJS + TypeORM + PostgreSQL + Redis readiness checks + JWT + WebSocket
 - **Frontend**: Next.js 14 + Tailwind CSS + Recharts + Socket.IO
 - **Auth**: JWT with multi-tenant support
 - **Real-time**: WebSocket for live security alerts
@@ -33,12 +37,15 @@ Security Operations Center (SOC) — Centralized security event management, vuln
 docker-compose up -d
 ```
 
+This starts PostgreSQL and Redis for local readiness checks.
+
 ### 2. Backend
 
 ```bash
 cd backend
 cp .env.example .env    # configure database credentials
 npm install
+npm run migration:run  # apply TypeORM migrations
 npm run start:dev       # http://localhost:3001
 ```
 
@@ -86,6 +93,12 @@ Open http://localhost:3000/login and register a new account.
 - Incidents by category breakdown
 - 30-day timeline
 
+### Health and Readiness
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/health` | Liveness status for the API process |
+| GET | `/ready` | Readiness status with PostgreSQL and Redis checks |
+
 ### Compliance
 - Framework tracking: ISO 27001, LGPD, NIST
 - Per-framework compliance percentage
@@ -131,11 +144,18 @@ Open http://localhost:3000/login and register a new account.
 ### Metrics
 | Method | Endpoint | Description |
 |--------|----------|-------------|
+| GET | `/metrics` | Prometheus scrape endpoint for Grafana |
 | GET | `/api/metrics/overview` | Dashboard overview |
 | GET | `/api/metrics/mttr` | Mean Time to Resolve |
 | GET | `/api/metrics/mttd` | Mean Time to Detect |
 | GET | `/api/metrics/incidents-by-category` | Category breakdown |
 | GET | `/api/metrics/timeline` | 30-day event timeline |
+
+### Health and Readiness
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/health` | Liveness status for the API process |
+| GET | `/ready` | Readiness status with PostgreSQL and Redis checks |
 
 ### Compliance
 | Method | Endpoint | Description |
@@ -207,3 +227,18 @@ Detailed architecture, module responsibilities, scripts, testing strategy, CI/CD
 ## License
 
 MIT
+
+## Observability
+
+- `GET /metrics` exposes Prometheus text metrics (`secops_api_up`, `secops_api_uptime_seconds`, and memory gauges) for scraping.
+- Import `docs/grafana/secops-dashboard.json` into Grafana and configure a Prometheus datasource with UID `prometheus`.
+- Use `GET /health` for liveness checks and `GET /ready` for readiness checks that validate PostgreSQL and Redis.
+
+## TypeORM Migrations
+
+Migration history lives in `backend/src/migrations/`. Run `npm run migration:run` from `backend/` to apply migrations and `npm run migration:rollback` to execute the TypeORM rollback path. Production compose enables `TYPEORM_MIGRATIONS_RUN=true` by default, while `TYPEORM_SYNCHRONIZE=false` keeps schema changes migration-driven.
+
+## Examples
+
+- Backend examples: `docs/examples/backend.http` includes liveness, readiness, Prometheus metrics, and authenticated SOC metrics calls.
+- Frontend example: `docs/examples/frontend-health-and-metrics.ts` shows how the existing Axios client can consume health, readiness, and metrics responses.

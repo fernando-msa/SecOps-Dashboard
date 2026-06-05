@@ -19,6 +19,7 @@ import { NotificationsModule } from "./notifications/notifications.module";
 import { TwoFAModule } from "./twofa/twofa.module";
 import { AuditModule } from "./audit/audit.module";
 import { ApiKeysModule } from "./apikeys/apikeys.module";
+import { HealthModule } from "./health/health.module";
 
 @Module({
   imports: [
@@ -34,7 +35,11 @@ import { ApiKeysModule } from "./apikeys/apikeys.module";
         password: config.get("DATABASE_PASSWORD", "secops_secret"),
         database: config.get("DATABASE_NAME", "secops_db"),
         autoLoadEntities: true,
-        synchronize: true, // disable in production
+        synchronize:
+          config.get<string>("TYPEORM_SYNCHRONIZE", "false") === "true",
+        migrationsRun:
+          config.get<string>("TYPEORM_MIGRATIONS_RUN", "false") === "true",
+        migrations: [__dirname + "/migrations/*{.js,.ts}"],
       }),
     }),
     AuthModule,
@@ -55,6 +60,7 @@ import { ApiKeysModule } from "./apikeys/apikeys.module";
     TwoFAModule,
     AuditModule,
     ApiKeysModule,
+    HealthModule,
   ],
 })
 export class AppModule {}
