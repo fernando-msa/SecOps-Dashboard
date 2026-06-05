@@ -1,5 +1,13 @@
 # SecOps Dashboard
 
+![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF?logo=githubactions&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-node%3Atest-brightgreen?logo=node.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)
+![NestJS](https://img.shields.io/badge/backend-NestJS-E0234E?logo=nestjs&logoColor=white)
+![Next.js](https://img.shields.io/badge/frontend-Next.js-000000?logo=nextdotjs&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+
 Security Operations Center (SOC) — Centralized security event management, vulnerability tracking, incident response playbooks, and compliance monitoring.
 
 ## Architecture
@@ -166,6 +174,35 @@ Part of a security and operations tooling ecosystem:
 - **SecPolicy-HAMA** — Security policy management
 - **InfraPulse** — Infrastructure monitoring
 - **OpsBoard** — Operations dashboard
+
+## Quality Engineering
+
+### Automated Tests
+
+The repository includes automated tests using the native Node.js test runner:
+
+```bash
+cd backend && npm test
+cd frontend && npm run test:ci
+```
+
+- Backend tests validate tenant-scoped metrics, MTTR calculation, and incident category aggregation.
+- Frontend tests validate i18n dictionary parity and non-empty translation values.
+
+### CI/CD Pipeline
+
+GitHub Actions workflow: `.github/workflows/ci-cd.yml`.
+
+The pipeline runs on pushes, pull requests, and manual dispatches with these stages:
+
+1. Backend typecheck and automated tests.
+2. Frontend typecheck, automated tests, and production build.
+3. Docker image build for backend and frontend.
+4. Production compose validation on `main`/`master` pushes.
+
+### Technical Documentation
+
+Detailed architecture, module responsibilities, scripts, testing strategy, CI/CD flow, security notes, and contribution guidance are available in [`docs/TECHNICAL_DOCUMENTATION.md`](docs/TECHNICAL_DOCUMENTATION.md).
 
 ## License
 
